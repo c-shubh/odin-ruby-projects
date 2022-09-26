@@ -95,15 +95,15 @@ class Game
                "------------\n"   \
                " %s | %s | %s \n" \
                "\n"
-    puts template % @board.map.with_index do |item, idx|
-      (item.nil? ? idx + 1 : item)
-    end
+    puts template % @board.map.with_index { |item, idx| (item.nil? ? idx + 1 : item) }
   end
 
   def winner?(player)
-    (@board[0, 3].all? { |c| c == player.char }) ||
-      (@board[3, 3].all? { |c| c == player.char }) ||
-      (@board[6, 3].all? { |c| c == player.char })
+    win_pos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    win_pos.each do |pos|
+      return true if @board.values_at(*pos).all?(player.char)
+    end
+    false
   end
 end
 
