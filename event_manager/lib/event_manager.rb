@@ -11,10 +11,13 @@ $LOGGER = Logger.new($stdout) if DEBUG
 
 # Functions --------------------------------------------------------------------
 
+# @param zipcode [String]
+# @return [String]
 def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5, '0')[0..4]
 end
 
+# @param zipcode [String]
 def legislators_by_zipcode(zipcode)
   civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
   civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
@@ -29,6 +32,8 @@ def legislators_by_zipcode(zipcode)
   end
 end
 
+# @param id [String]
+# @param form_letter [String]
 def save_thank_you_letter(id, form_letter)
   Dir.mkdir('output') unless Dir.exist?('output')
   filename = "output/thanks_#{id}.html"
